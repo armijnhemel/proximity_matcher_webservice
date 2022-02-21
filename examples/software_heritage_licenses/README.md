@@ -80,7 +80,7 @@ The output then needs to be converted to a `.pickle` file using the script
 
 After starting the server queries can be sent to it.
 
-# Example
+# Example (commandline)
 
 Open the Python console, load a file, compute the TLSH hash
 
@@ -103,6 +103,50 @@ distance will be 0 and the returned JSON will look like this:
 ```
 {"distance":0,"match":true,"tlsh":"T1D011461E72610773289613A055656CC5F26FB15F7AAF1684146DF284133746CD1FF844"}
 ```
+
+# Example (script)
+
+There is also a script that can process an entire directory of files. First
+run `prepare_tlsh_hashes.py` to walk the files and create a file with hashes:
+
+```
+$ python3 prepare_tlsh_hashes.py -i /path/to/directory -o /path/to/hashes-file
+```
+
+for example:
+
+```
+$ python3 prepare_tlsh_hashes.py -i /usr/share/licenses/ -o /tmp/licenses.txt
+```
+
+This file can then be fed to a test script called `test_licenses.py`:
+
+```
+$ python3 test_licenses.py -i /tmp/licenses.txt > /tmp/licenses_output.txt
+```
+
+This will output the results to the file `/tmp/licenses_output.txt`. A few
+lines of that file look like this:
+
+```
+{'distance': 24, 'match': True, 'tlsh': 'T1D931A61B13441BE75BF2178236AABDC4B08DC02EBB276E01186DF388537B12ED4B7190'}
+{'distance': 0, 'match': True, 'tlsh': 'T16082932E774543B206C203916A4F6CCFA32BD478723E11656469C1AD236BE35C3BFAD9'}
+{'distance': 0, 'match': True, 'tlsh': 'T13BB2553EA74513B206D202505A0F94DFE32BD07C32678A646499C15D23ABD3593FFBEA'}
+{'distance': 0, 'match': True, 'tlsh': 'T1D731658B13481BA756E216D3B266BDC4F15AE02E3B135E02186DE394576B83EC0F7495'}
+{'distance': 17, 'match': True, 'tlsh': 'T15231B54702841FA30AE2174231AAAEC0708DC02D3F236E041C7AF244537B42FD9B7081'}
+```
+
+Each line is a valid JSON response (as returned by the webserver. The results:
+
+1. `distance`: the TLSH distance. `0` means that there is no difference with a
+file known to the webservice (in this case that means it is in the Software
+Heritage dataset).
+2. `match`: whether or not there was a match. Right now if a valid TLSH hash
+was used as a parameter the result is always `True`. Only if the parameter is
+not a valid TLSH hash the result will be `False`. In case thresholds are
+implemented (which is the plan) this might be changed.
+3. `tlsh`: the TLSH hash of the match found by the webservice. This hash should
+be cross-correlated with the metadata in Software Heritage (SHA1, swhid, etc.)
 
 # Statistics
 
