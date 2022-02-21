@@ -73,12 +73,12 @@ The output then needs to be converted to a `.pickle` file using the script
 `create_vpt_pickle.py`:
 
 ```
+$ python3 create_vpt_pickle.py -i /tmp/tlsh-hashes.txt -o /licenses-tlsh.pickle
 ```
 
 ## Loading the pickle into the server and starting the server
 
-
-After starting the server queries can be sent to it.
+See server documentation.
 
 # Example (commandline)
 
