@@ -24,6 +24,9 @@ from flask import Flask
 
 from flask import abort, jsonify
 
+from werkzeug.serving import WSGIRequestHandler
+
+
 import vpt
 
 # two data structures that are currently not used, but could be filled
@@ -37,6 +40,7 @@ tlsh_to_sha256 = {}
 with open('/tmp/licenses-tlsh.pickle', 'rb') as pickle_file:
     root = vpt.pickle_restore(pickle.load(pickle_file))
 
+WSGIRequestHandler.protocol_version = "HTTP/1.1"
 app = Flask(__name__)
 
 @app.route("/tlsh/<tlsh_hash>")
