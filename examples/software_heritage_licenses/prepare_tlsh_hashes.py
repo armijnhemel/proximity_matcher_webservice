@@ -17,6 +17,8 @@ def main(in_directory, outfile):
         sys.exit(1)
 
     for result in in_dir.glob('**/*'):
+        if not result.is_file():
+            continue
         with open(result, 'rb') as infile:
             try:
                 data = b" ".join(infile.read().split())
