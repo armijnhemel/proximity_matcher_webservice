@@ -10,6 +10,7 @@ let
     dill
     flask
     pyyaml
+    requests
     tlsh
   ]);
 
