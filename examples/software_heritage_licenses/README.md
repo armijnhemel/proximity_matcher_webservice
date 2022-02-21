@@ -104,6 +104,19 @@ distance will be 0 and the returned JSON will look like this:
 {"distance":0,"match":true,"tlsh":"T1D011461E72610773289613A055656CC5F26FB15F7AAF1684146DF284133746CD1FF844"}
 ```
 
+1. `distance`: the TLSH distance. `0` means that there is no difference with a
+file known to the webservice (in this case that means it is in the Software
+Heritage dataset).
+2. `match`: whether or not there was a match. Right now if a valid TLSH hash
+was used as a parameter the result is always `True`. Only if the parameter is
+not a valid TLSH hash the result will be `False`. In case thresholds are
+implemented (which is the plan) this might be changed.
+3. `tlsh`: the TLSH hash of the match found by the webservice.
+
+The result hash should be cross-correlated with the metadata in Software
+Heritage (SHA1, swhid, etc.) as the webservice does not include any of the
+"business logic" but is only used for finding the closest match.
+
 # Example (script)
 
 There is also a script that can process an entire directory of files. First
@@ -136,7 +149,7 @@ lines of that file look like this:
 {'distance': 17, 'match': True, 'tlsh': 'T15231B54702841FA30AE2174231AAAEC0708DC02D3F236E041C7AF244537B42FD9B7081'}
 ```
 
-Each line is a valid JSON response (as returned by the webserver. The results:
+Each line is a valid JSON response (as returned by the webserver). The results:
 
 1. `distance`: the TLSH distance. `0` means that there is no difference with a
 file known to the webservice (in this case that means it is in the Software
@@ -145,8 +158,11 @@ Heritage dataset).
 was used as a parameter the result is always `True`. Only if the parameter is
 not a valid TLSH hash the result will be `False`. In case thresholds are
 implemented (which is the plan) this might be changed.
-3. `tlsh`: the TLSH hash of the match found by the webservice. This hash should
-be cross-correlated with the metadata in Software Heritage (SHA1, swhid, etc.)
+3. `tlsh`: the TLSH hash of the match found by the webservice.
+
+The result hash should be cross-correlated with the metadata in Software
+Heritage (SHA1, swhid, etc.) as the webservice does not include any of the
+"business logic" but is only used for finding the closest match.
 
 # Statistics
 
