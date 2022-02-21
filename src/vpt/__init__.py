@@ -107,7 +107,6 @@ def pickle_tree(root, pickle_file):
 
 def pickle_prep(node):
     if node:
-        #del node.tobj
         node.tobj = node.tobj.hexdigest()
         pickle_prep(node.left_child)
         pickle_prep(node.right_child)
