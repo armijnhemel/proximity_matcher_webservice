@@ -9,7 +9,21 @@ slightly), or to find a file in collection of known files, for example files
 that have already been vetted or cleared by an open source software compliance
 team or security audit team.
 
+This tool should not be used in production as is but should server as an
+example of how to do these things.
+
 ## TLSH and exact matches
+
+TLSH stands for "Trendmicro Locality Sensitive Hash" and, as the name implies,
+it is a locality sensitive hash (LSH). Whereas regular cryptographic hashes
+such as MD5 or SHA256 were designed in such a way that changing a single
+byte would result in vastly different hashes (barring some edge cases) TLSH
+was designed in such a way that similar files generate similar hashes, making
+it possible to compute a distance between the two hashes (and thus files).
+
+With regular cryptographic hashes it is only possible to answer the question
+"are these two files identical?" but with TLSH it is possible to answer the
+question "how close are these two files?" as well.
 
 ## Vantage Point Trees, HAC-T and other related work
 
@@ -46,6 +60,18 @@ $ flask run
 This will launch the webservce, which can then be accessed on the advertised
 URL.
 
+There is also an optimized version of the server called
+`proximity_server_opt.py` that keeps an additional list of TLSH hashes that
+are known in the data set in memory, to be able to very quickly send responses
+for already known hashes. Currently the list of the hashes (one TLSH hash per
+line) is hardcoded to `/tmp/tlsh-hashes.txt`. This will be changed in the
+future. Starting the webserrvice should be changed accordingly:
+
+```
+$ export FLASK_APP=proximity_server_opt.py
+$ flask run
+
+```
 # Caveats
 
 The VPT trees are not necessarily balanced. This is because the properties
@@ -73,4 +99,4 @@ webservice is started
 
 # Links
 
-* <http://tlsh.org/>
+1. <http://tlsh.org/>
