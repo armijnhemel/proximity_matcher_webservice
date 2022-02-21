@@ -23,6 +23,7 @@ def main(infile):
             except ValueError:
                 continue
 
+            # TODO: make parallel
             try:
                 req = requests.get('http://127.0.0.1:5000/tlsh/%s' % tlsh_hash)
                 print(req.json())
