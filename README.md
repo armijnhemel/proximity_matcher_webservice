@@ -99,7 +99,6 @@ future. Starting the webservice should be changed accordingly:
 ```
 $ export FLASK_APP=proximity_server_opt.py
 $ flask run
-
 ```
 
 # Interpreting results
