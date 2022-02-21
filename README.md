@@ -58,6 +58,20 @@ directory `tlshCluster`.
 
 # Running the proximity matching server
 
+## Requirements
+
+For this you need a recent Python, plus a few external packages:
+
+* `click`
+* `flask`
+* `requests`
+* `tlsh`
+
+Be warned: some of these might be called different on different distributions.
+Also, some distributions ship old versions of `tlsh`. In case you are using
+the Nix package manager there is also a `shell.nix` file that you can use to
+quickly set up your environment.
+
 ## Preparing the data set
 
 To prepare the data you need to first have a list of TLSH hashes. This can
