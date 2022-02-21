@@ -48,6 +48,7 @@ app = Flask(__name__)
 
 @app.route("/tlsh/<tlsh_hash>")
 def process_tlsh(tlsh_hash):
+    # first verify if the TLSH hash is a correct hash
     h = tlsh.Tlsh()
     try:
         h.fromTlshStr(tlsh_hash)
@@ -60,10 +61,6 @@ def process_tlsh(tlsh_hash):
         best_match = tlsh_hash
         res = {'match': True, 'tlsh': best_match, 'distance': best}
         return jsonify(res)
-
-    # first verify if the TLSH hash is a correct hash
-    best = sys.maxsize
-    best_match = None
 
     best_vpt = {"dist": sys.maxsize, "hash": None}
 
