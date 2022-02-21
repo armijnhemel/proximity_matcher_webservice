@@ -33,7 +33,7 @@ have to be computed first. The SHA1 checksums are already known (as the file
 name of the file is the SHA1 checksum of the file).
 
 The script `walk_software_heritage_blobs.py` processes the files extracted from 
-blobs.tar.zst` and computes `sha256` and `TLSH` hashes, as well as "normalized"
+`blobs.tar.zst` and computes `sha256` and `TLSH` hashes, as well as "normalized"
 versions where the data is first cleaned up to get rid of excessive whitespace,
 different line endings, and so on (which are sometimes the only differences
 between files).
