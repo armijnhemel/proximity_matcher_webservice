@@ -1,34 +1,40 @@
 import pickle
 import sys
 
+import click
 import tlsh
+
 import vpt
 
-tlsh_hashes = []
-tlsh_to_sha256 = {}
+@click.command(short_help='process TLSH hashes and turn into a pickle')
+@click.option('--infile', '-i', required=True, help='path to configuration file', type=click.File('r'))
+@click.option('--outfile', '-o', help='run if metadata hasn\'t changed', type=click.File('wb'))
+def main(infile, outfile):
+    tlsh_hashes = set()
 
-with open('/tmp/tlsh-hashes.txt', 'r') as tlsh_file:
-    for i in tlsh_file:
-        (sha256_hash, tlsh_hash) = i.strip().split(',')
-        if not tlsh_hash in tlsh_to_sha256:
-            tlsh_to_sha256[tlsh_hash] = []
-            tlsh_hashes.append(tlsh_hash)
-        tlsh_to_sha256[tlsh_hash].append(sha256_hash)
+    with infile as tlsh_file:
+        for i in tlsh_file:
+            tlsh_hash = i.strip()
+            if tlsh_hash in tlsh_hashes:
+                continue
+            tlsh_hashes.add(tlsh_hash)
 
-tlsh_objects = []
+    tlsh_objects = []
 
-for h in tlsh_hashes:
-    try:
-        t = tlsh.Tlsh()
-        t.fromTlshStr(h)
-    except ValueError:
-        continue
+    for h in tlsh_hashes:
+        try:
+            t = tlsh.Tlsh()
+            t.fromTlshStr(h)
+        except ValueError:
+            continue
 
-    tlsh_objects.append(t)
-    node = vpt.Node(t)
+        tlsh_objects.append(t)
 
-tidx_list = range(0, len(tlsh_hashes))
-root = vpt.vpt_grow(tlsh_objects, tidx_list)
+    if tlsh_objects != []:
+        root = vpt.vpt_grow(tlsh_objects)
 
-with open('/tmp/bla.pickle', 'wb') as pickle_file:
-    vpt.pickle_tree(root, pickle_file)
+        #with outfile as pickle_file:
+        vpt.pickle_tree(root, outfile)
+
+if __name__ == "__main__":
+    main()

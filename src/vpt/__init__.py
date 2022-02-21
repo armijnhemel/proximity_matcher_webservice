@@ -21,21 +21,20 @@ import tlsh
 
 class Node:
     '''Vantage point tree'''
-    def __init__(self, tobj, idx=-1, threshold=0):
+    def __init__(self, tobj, threshold=0):
         self.left_child = None
         self.right_child = None
         self.tobj = tobj
         self.threshold = threshold
 
-def vpt_grow(tlsh_object_list, tlsh_index_list):
+def vpt_grow(tlsh_object_list):
     '''Grow a Vantage Point Tree given a list of objects and indexes'''
     lenList = len(tlsh_object_list)
 
     vantage_point_object = tlsh_object_list[0]
-    vantage_point_index = tlsh_index_list[0]
 
     if lenList == 1:
-        thisNode = Node(vantage_point_object, vantage_point_index, -1)
+        thisNode = Node(vantage_point_object, -1)
         return thisNode
 
     # compute the TLSH distances for each object
@@ -44,31 +43,27 @@ def vpt_grow(tlsh_object_list, tlsh_index_list):
     # determine the median
     med = statistics.median_low(distances_list)
 
-    thisNode = Node(vantage_point_object, vantage_point_index, med)
+    thisNode = Node(vantage_point_object, med)
 
     # split data into two lists: left child and right
     # child depending on the TLSH distance to vantage_point_object
     tlsh_objects_left = []
-    tlsh_indexes_left = []
 
     tlsh_objects_right = []
-    tlsh_indexes_right = []
 
     for li in range(1, lenList):
         if distances_list[li] < med:
             tlsh_objects_left.append(tlsh_object_list[li])
-            tlsh_indexes_left.append(tlsh_index_list[li])
         else:
             tlsh_objects_right.append(tlsh_object_list[li])
-            tlsh_indexes_right.append(tlsh_index_list[li])
 
     # recursively walk the data, unless there is no more data
     if tlsh_objects_left != []:
-        thisNode.left_child = vpt_grow(tlsh_objects_left, tlsh_indexes_left)
+        thisNode.left_child = vpt_grow(tlsh_objects_left)
     else:
         thisNode.left_child = None
     if tlsh_objects_right != []:
-        thisNode.right_child = vpt_grow(tlsh_objects_right, tlsh_indexes_right)
+        thisNode.right_child = vpt_grow(tlsh_objects_right)
     else:
         thisNode.right_child = None
     return thisNode
