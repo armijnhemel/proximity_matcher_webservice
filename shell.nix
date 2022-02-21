@@ -7,7 +7,6 @@ let
 
   my-python = pkgs.python39.withPackages (p: with p; [
     click
-    dill
     flask
     pyyaml
     requests
