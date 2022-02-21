@@ -12,7 +12,7 @@ import click
 
 @click.command(short_help='process')
 @click.option('--output', '-o', required=True, help='path to output CSV file', type=click.File('w'))
-@click.option('--directory', '-d', required=True, help='path to samples directory')
+@click.option('--directory', '-d', required=True, help='path to samples directory', type=click.Path(exists=True))
 def main(output, directory):
     directory = pathlib.Path(directory)
 
