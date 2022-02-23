@@ -42,7 +42,7 @@ fix this. As malware is continuously morphing to evade detection using regular
 hashes TLSH is used to find close matches to known malware. To do efficient
 hashes they use an algorithm named "HAC-T"[2], which is based on Vantage
 Point Trees and clustering. Vantage Point Trees with TLSH allow much quicker
-lookups than by using a regular list.
+lookups than by using a regular list[3].
 
 Because for me there was no need for clustering (which requires labeling
 files) only a modified version of the Vantage Point Tree part of HAC-T was
@@ -146,11 +146,9 @@ looking it up in an external database.
 
 # Caveats
 
-The VPT trees are not necessarily balanced. This is because the properties
-of the nodes and subtrees are not transitive.
-
-Because the VPT is a recursive data structure stored in a pickle it could
-mean that you get errors like this:
+Although the VPT trees try to be balanced they are not necessarily. Because the
+VPT is a recursive data structure stored in a pickle it could mean that you get
+errors like the following:
 
 ```
 Traceback (most recent call last):
@@ -167,9 +165,10 @@ solutions:
 1. do not sort the TLSH hashes
 2. use less data
 3. do not use a pickle, but recreate the vantage point tree whenever the
-webservice is started
+webservice is started. This might be expensive if a lot of data is involved.
 
 # Links
 
-1. <http://tlsh.org/>
-2. <http://tlsh.org/papers.html>
+1. <http://tlsh.org/> - official TLSH website
+2. <http://tlsh.org/papers.html> - papers describing HAC-T and vantage point trees
+3. <https://www.youtube.com/watch?v=wMt0mVkhRA0> - explanation of TLSH and vantage point trees (first 13 minutes)
