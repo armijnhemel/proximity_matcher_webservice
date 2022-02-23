@@ -174,7 +174,12 @@ $ ls -lh licenses-tlsh.pickle
 -rw-rw-r-- 1 armijn armijn 479M Feb 20 15:11 licenses-tlsh.pickle
 ```
 
-and contains 5,184,281 unique TLSH hashes.
+and contains 5,184,281 unique TLSH hashes. This is about 1,000,000 fewer files
+than in the archive with files from Software Heritage. This is because the
+archive from Software Heritage also contains binary files like images, but
+also because the parsing process sanitises the input (only looks at files with
+valid UTF-8 characters and also get rids of duplicates that only differ in
+whitespace). For some files no TLSH hash could be computed.
 
 When loaded into the server, the server takes around 3 GiB of memory:
 
