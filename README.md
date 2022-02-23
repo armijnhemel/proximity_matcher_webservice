@@ -60,7 +60,8 @@ directory `tlshCluster`.
 
 ## Requirements
 
-For this you need a recent Python, plus a few external packages:
+To run the proximity matching server you need a recent Python 3, plus a few
+external packages:
 
 * `click`
 * `flask`
@@ -142,7 +143,7 @@ As the webservice does not include any of the "business logic" but is only used
 for finding the closest match this means that the data has to be further
 processed for example by cross-correlating with other data. Alternatively the
 served could be extended to also return this information, for example by
-looking it up in an external database.
+loading it from an external database or some other resource.
 
 # Caveats
 

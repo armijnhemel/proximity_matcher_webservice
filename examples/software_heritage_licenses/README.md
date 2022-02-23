@@ -187,7 +187,7 @@ When loaded into the server, the server takes around 3 GiB of memory:
 Querying the server and getting a result takes around 0.6 seconds or less per
 file.
 
-When using the optimized server the memory usage is more:
+When using the optimized server the memory usage is a bit higher:
 
 ```
   53323 armijn    20   0 4099172   3.9g  10876 S   0.0  12.5   0:29.76 .flask-wrapped
@@ -196,4 +196,5 @@ When using the optimized server the memory usage is more:
 (output taken from `top`)
 
 Querying the server and getting a result still takes around 0.6 seconds or less
-per file for unknown files, but responses sent for known files are very quick.
+per file for unknown files, but responses sent for known files are very quick
+(as they are now just a simple lookup).
