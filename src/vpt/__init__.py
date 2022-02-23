@@ -13,6 +13,12 @@
 # see file "LICENSE
 #################################################################
 
+# Additional code was written by Armijn Hemel
+# Pickle methods written by Imre Fodi and Tijmen van der Spijk
+# as part of a research project for OS3 <https://www.os3.nl/>
+# These contributions are under Apache 2.0
+# SPDX-License-Identifier: Apache-2.0
+
 import pickle
 import statistics
 
