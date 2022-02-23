@@ -28,11 +28,12 @@ from werkzeug.serving import WSGIRequestHandler
 
 import vpt
 
-# two data structures that are currently not used, but could be filled
-# with data to speed up looking up known files or used to return some
-# useful information directly to the clients, without needing to do an
-# extra lookup in an external file or database.
+# data structure filled with data to speed up looking up known files
 tlsh_hashes = set()
+
+# data structure that is currently not used, but could be filled
+# with data to return some useful information directly to the clients,
+# without needing to do an extra lookup in an external file or database.
 tlsh_to_sha256 = {}
 
 with open('/tmp/tlsh-hashes.txt', 'r') as tlsh_file:
