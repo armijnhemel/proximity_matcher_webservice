@@ -147,6 +147,26 @@ loading it from an external database or some other resource.
 
 # Caveats
 
+There are some caveats when creating the database.
+
+## Not all files are suitable
+
+There are some files that are not very suitable for this approach, because of
+the file format, where the structure of the file either enforces that there is
+a lot of similarity, or where compression makes sure that there is very little
+or a combination of both.
+
+As an example, PNG files always start with a very similar header (often only
+differing a few bytes) which will cause TLSH to say those parts are very
+similar, but the payload of the data (the `iDAT` chunks) are zlib-compressed
+and compression might lead to vastly different outcomes. Metadata, such as
+XMP data (if not compressed) could also lead to strange results.
+
+Examples of other files that are not very suitable are files with a lot of
+markup or that are generated, sich as SVG files or Visual Studio build files.
+
+## Unbalanced trees
+
 Although the VPT trees try to be balanced they are not necessarily. Because the
 VPT is a recursive data structure stored in a pickle it could mean that you get
 errors like the following:
@@ -166,7 +186,30 @@ solutions:
 1. do not sort the TLSH hashes
 2. use less data
 3. do not use a pickle, but recreate the vantage point tree whenever the
-webservice is started. This might be expensive if a lot of data is involved.
+webservice is started. This might be expensive (several minutes) if a lot of data
+is involved.
+4. do not include useless data where there will not be a useful match such as
+graphics files
+5. partition the data and use multiple instances of the webservice. A good
+partitioning could for example be by programming language, or extension.
+
+# Comparison to snippet matching
+
+Although the proximity matching method seems like what snippet scanners do
+there are some very clear differences:
+
+1. the method used here works on whole files only, whereas snippet scans work
+by searching for snippets (hence the name) of known files
+2. the result is a (shortest) distance to a known file in a set of files,
+while the result of snippet scanners is a match with for example a percentage
+("files A and B match for 97%") and line numbers or byte ranges where the
+files match.
+3. proximity matching code will not be easily/reliably able to detect reuse of
+small pieces of code.
+
+Snippet scanning and proximity matching each have their own uses and can be
+used to solve different problems. They complement each other but should *not*
+be used in place of each other.
 
 # Links
 
