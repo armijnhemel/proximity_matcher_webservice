@@ -65,6 +65,7 @@ external packages:
 
 * `click`
 * `flask`
+* `gunicorn`
 * `requests`
 * `tlsh`
 
