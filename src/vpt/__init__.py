@@ -20,6 +20,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import pickle
+import pickletools
 import statistics
 
 import tlsh
@@ -109,7 +110,7 @@ def vpt_search(tree, search_item, best):
 # pickle related methods
 def pickle_tree(root, pickle_file):
     pickle_prep(root)
-    pickle.dump(root, pickle_file)
+    pickle_file.write(pickletools.optimize(pickle.dumps(root)))
 
 def pickle_prep(tree):
     if tree:
