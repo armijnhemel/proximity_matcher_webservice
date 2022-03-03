@@ -123,16 +123,17 @@ $ flask run
 
 When using the Gunicorn WSGI server it is easier to use multiple workers.
 Please note: right now a complete copy of all the data is kept in memory per
-worker. Sharing data is a TODO.
+worker. The `--preload` option is to reduce memory usage. Sharing data to
+reduce memory further is a TODO.
 
 ```
-$ gunicorn -w 4 -b 127.0.0.1:5000 proximity_server:app
+$ gunicorn -w 4 -b 127.0.0.1:5000 --preload proximity_server:app
 ```
 
 or the optimized version (see documentation above):
 
 ```
-$ gunicorn -w 4 -b 127.0.0.1:5000 -t 60 proximity_server_opt:app
+$ gunicorn -w 4 -b 127.0.0.1:5000 -t 60 --preload proximity_server_opt:app
 ```
 
 Please note that the optimized server uses the `-t` setting, which indicates
