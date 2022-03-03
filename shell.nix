@@ -8,6 +8,7 @@ let
   my-python = pkgs.python39.withPackages (p: with p; [
     click
     flask
+    gunicorn
     pyyaml
     requests
     tlsh

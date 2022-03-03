@@ -96,6 +96,8 @@ $ python3 create_vpt_pickle.py -i /tmp/tlsh-hashes.txt -o /tmp/licenses-tlsh.pic
 Note: currently the location of the pickle file is still hardcoded to
 `/tmp/licenses-tlsh.pickle`. This will be changed in the future.
 
+### Flask
+
 ```
 $ export FLASK_APP=proximity_server.py
 $ flask run
@@ -115,6 +117,25 @@ future. Starting the webservice should be changed accordingly:
 $ export FLASK_APP=proximity_server_opt.py
 $ flask run
 ```
+
+### Gunicorn
+
+When using the Gunicorn WSGI server it is easier to use multiple workers.
+Please note: right now a complete copy of all the data is kept in memory per
+worker. Sharing data is a TODO.
+
+```
+$ gunicorn -w 4 -b 127.0.0.1:5000 proximity_server:app
+```
+
+or the optimized version (see documentation above):
+
+```
+$ gunicorn -w 4 -b 127.0.0.1:5000 -t 60 proximity_server_opt:app
+```
+
+Please note that the optimized server uses the `-t` setting, which indicates
+a time out
 
 # Interpreting results
 
