@@ -26,7 +26,7 @@ import vpt
 
 @click.command(short_help='process TLSH hashes and turn into a pickle')
 @click.option('--infile', '-i', required=True, help='file with TLSH hashes', type=click.File('r'))
-@click.option('--outfile', '-o', help='output file for VPT pickle', type=click.File('wb'))
+@click.option('--outfile', '-o', required=True, help='output file for VPT pickle', type=click.File('wb'))
 def main(infile, outfile):
     tlsh_hashes = set()
 
