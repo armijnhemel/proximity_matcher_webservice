@@ -35,7 +35,7 @@ TLSH.
 
 ## Vantage Point Trees, HAC-T and other related work
 
-It is easy to when having a TLSH has to compare it to a list of TLSH hashes
+It is easy when having a TLSH to compare it to a list of TLSH hashes
 sequentially, but as more hashes are added it becomes more and more expensive
 to do. Researchers at Trendmicro bumped into the same problem and wanted to
 fix this. As malware is continuously morphing to evade detection using regular
