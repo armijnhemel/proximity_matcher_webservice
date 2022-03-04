@@ -108,9 +108,12 @@ def vpt_search(tree, search_item, best):
     return best
 
 # pickle related methods
-def pickle_tree(root, pickle_file):
+def pickle_tree(root, pickle_file, optimize=True):
     pickle_prep(root)
-    pickle_file.write(pickletools.optimize(pickle.dumps(root)))
+    if optimize:
+        pickle_file.write(pickletools.optimize(pickle.dumps(root)))
+    else:
+        pickle.dump(root, pickle_file)
 
 def pickle_prep(tree):
     if tree:
