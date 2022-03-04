@@ -1,7 +1,7 @@
 # Webservice for proximity matching using TLSH and Vantage Point Trees 
 
 This repository contains a proof of concept webservice for proximity matching
-to quickly find the closest match for a file in a collection of known files.
+to quickly find the closest match for a hash in a collection of known hash.
 
 One use case could be to find the closest match for an open source license
 text in a collection of known license texts (as license texts tend to very
