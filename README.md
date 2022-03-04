@@ -119,6 +119,10 @@ $ export FLASK_APP=proximity_server_opt.py
 $ flask run
 ```
 
+The optimized version can use significantly more memory. If it is already
+possible to filter known hashes before sending the hashes to the webservice
+then it is recommended to use the regular version.
+
 ### Gunicorn
 
 When using the Gunicorn WSGI server it is easier to use multiple workers.
