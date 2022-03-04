@@ -40,13 +40,13 @@ sequentially, but as more hashes are added it becomes more and more expensive
 to do. Researchers at Trendmicro bumped into the same problem and wanted to
 fix this. As malware is continuously morphing to evade detection using regular
 hashes TLSH is used to find close matches to known malware. To do efficient
-hashes they use an algorithm named "HAC-T"[2], which is based on Vantage
-Point Trees and clustering. Vantage Point Trees with TLSH allow much quicker
-lookups than by using a regular list[3].
+lookups and correctly label malware they use an algorithm named "HAC-T"[2],
+which is based on Vantage Point Trees and clustering. Vantage Point Trees
+with TLSH allow much quicker lookups than using a regular list[3].
 
 Because for me there was no need for clustering (which requires labeling
-files) only a modified version of the Vantage Point Tree part of HAC-T was
-used. The modifications are:
+files) only a modified version of the Vantage Point Tree part of HAC-T is
+used here. The modifications are:
 
 * removing dead code
 * inlining code for performance
