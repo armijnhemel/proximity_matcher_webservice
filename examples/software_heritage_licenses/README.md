@@ -181,10 +181,10 @@ also because the parsing process sanitises the input (only looks at files with
 valid UTF-8 characters and also get rids of duplicates that only differ in
 whitespace). For some files no TLSH hash could be computed.
 
-When loaded into the server, the server takes around 3 GiB of memory:
+When loaded into the server, the server takes 1.4 GiB of memory:
 
 ```
-  20303 armijn    20   0 3241960   3.0g  10548 S   0.0   9.6   0:19.13 .flask-wrapped
+   7517 armijn    20   0 1589132   1.4g  10624 S   0.0   4.6   0:12.05 .flask-wrapped
 ```
 
 (output taken from `top`).
@@ -192,10 +192,10 @@ When loaded into the server, the server takes around 3 GiB of memory:
 Querying the server and getting a result takes around 0.6 seconds or less per
 file.
 
-When using the optimized server the memory usage is a bit higher:
+When using the optimized server the memory usage is almost 1 GiB more:
 
 ```
-  53323 armijn    20   0 4099172   3.9g  10876 S   0.0  12.5   0:29.76 .flask-wrapped
+   7559 armijn    20   0 2446348   2.3g  10588 S   0.0   7.4   0:21.52 .flask-wrapped
 ```
 
 (output taken from `top`)

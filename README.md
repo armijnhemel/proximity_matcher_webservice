@@ -92,6 +92,11 @@ The `create_vpt_pickle.py` tool can be invoked as follows:
 $ python3 create_vpt_pickle.py -i /tmp/tlsh-hashes.txt -o /tmp/licenses-tlsh.pickle
 ```
 
+The data structure uses `__slots__` to squeeze more performance out of the
+code. This means that the data structure is static and cannot be changed while
+the program is running. If a dataset needs to be changed, it should be
+regenerated.
+
 ## Starting the server
 
 Note: currently the location of the pickle file is still hardcoded to
@@ -219,6 +224,8 @@ is involved.
 graphics files
 5. partition the data and use multiple instances of the webservice. A good
 partitioning could for example be by programming language, or extension.
+6. raise the recursion limit (currently already raised to `1000` above the
+system default)
 
 # Comparison to snippet matching
 

@@ -22,12 +22,15 @@
 import pickle
 import pickletools
 import statistics
+import sys
 
 import tlsh
 
 
 class Tree:
     '''Vantage point tree'''
+    __slots__ = ['tobj', 'threshold', 'left_child', 'right_child']
+
     def __init__(self, tobj, threshold=0):
         self.left_child = None
         self.right_child = None
@@ -109,6 +112,8 @@ def vpt_search(tree, search_item, best):
 
 # pickle related methods
 def pickle_tree(root, pickle_file, optimize=True):
+    recursion_limit = sys.getrecursionlimit()
+    sys.setrecursionlimit(recursion_limit + 1000)
     pickle_prep(root)
     if optimize:
         pickle_file.write(pickletools.optimize(pickle.dumps(root)))
