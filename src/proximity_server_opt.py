@@ -16,6 +16,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+import multiprocessing
 import pickle
 import sys
 
@@ -28,6 +29,8 @@ from werkzeug.serving import WSGIRequestHandler
 
 import vpt
 
+processmanager = multiprocessing.Manager()
+
 # data structure filled with data to speed up looking up known files
 tlsh_hashes = set()
 
@@ -39,6 +42,11 @@ tlsh_to_sha256 = {}
 with open('/tmp/tlsh-hashes.txt', 'r') as tlsh_file:
     for h in tlsh_file:
         tlsh_hashes.add(h.strip())
+
+'''
+tlsh_hashes = dict.fromkeys(tlsh_hashes, None)
+tlsh_hashes = processmanager.dict(tlsh_hashes)
+'''
 
 # load tlsh VPT
 with open('/tmp/licenses-tlsh.pickle', 'rb') as pickle_file:
