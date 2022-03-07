@@ -157,6 +157,8 @@ $ gunicorn -w 8 -b 127.0.0.1:5000 --worker-class gevent --preload proximity_serv
 ```
 
 Whether or not this will make performance a lot better depends on your data.
+As the program is CPU-bound it might not matter that much according to
+blogposts[4].
 
 # Interpreting results
 
@@ -260,3 +262,4 @@ be used in place of each other.
 1. <http://tlsh.org/> - official TLSH website
 2. <http://tlsh.org/papers.html> - papers describing HAC-T and vantage point trees
 3. <https://www.youtube.com/watch?v=wMt0mVkhRA0> - explanation of TLSH and vantage point trees (first 13 minutes)
+4. <https://dev.to/lsena/gunicorn-worker-types-how-to-choose-the-right-one-4n2c>
