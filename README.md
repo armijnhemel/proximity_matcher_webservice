@@ -65,6 +65,7 @@ external packages:
 
 * `click`
 * `flask`
+* `gevent`
 * `gunicorn`
 * `requests`
 * `tlsh`
@@ -146,7 +147,16 @@ $ gunicorn -w 4 -b 127.0.0.1:5000 -t 60 --preload proximity_server_opt:app
 ```
 
 Please note that the optimized server uses the `-t` setting, which indicates
-a time out
+a time out.
+
+If you want to use `keep-alive` connections, you need to add the
+`--worker-class gevent` parameter, for example:
+
+```
+$ gunicorn -w 8 -b 127.0.0.1:5000 --worker-class gevent --preload proximity_server_opt:app
+```
+
+Whether or not this will make performance a lot better depends on your data.
 
 # Interpreting results
 

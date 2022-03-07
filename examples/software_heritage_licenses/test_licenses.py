@@ -24,10 +24,11 @@ import requests
 import tlsh
 
 def lookup_hash(tlsh_queue):
+    s = requests.Session()
     while True:
         tlsh_hash = tlsh_queue.get()
         try:
-            req = requests.get('http://127.0.0.1:5000/tlsh/%s' % tlsh_hash)
+            req = s.get('http://127.0.0.1:5000/tlsh/%s' % tlsh_hash)
             print(req.json())
             sys.stdout.flush()
         except requests.exceptions.RequestException:
