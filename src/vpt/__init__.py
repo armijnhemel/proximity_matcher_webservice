@@ -90,7 +90,7 @@ def vpt_search(tree, search_item, best):
     d = search_item.diff(tree.tobj)
     if d < best['dist']:
         best['dist'] = d
-        best['hash'] = tree.tobj.hexdigest()
+        best['hash'] = tree.tobj
 
     if d == 0:
         return best

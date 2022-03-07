@@ -48,7 +48,7 @@ def process_tlsh(tlsh_hash):
 
     vpt_result = vpt.vpt_search(root, h, best_vpt)
     if vpt_result is not None:
-        res = {'match': True, 'tlsh': vpt_result['hash'], 'distance': vpt_result['dist']}
+        res = {'match': True, 'tlsh': vpt_result['hash'].hexdigest(), 'distance': vpt_result['dist']}
     else:
         res = {'match': False}
 
