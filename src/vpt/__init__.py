@@ -85,9 +85,6 @@ def vpt_search(tree, search_item, best):
     if tree is None:
         return
 
-    if best['dist'] == 0:
-        return best
-
     # compute the TLSH distance between the item
     # to be searched and the tree of the tree
     d = search_item.diff(tree.tobj)
@@ -100,10 +97,20 @@ def vpt_search(tree, search_item, best):
 
     if d <= tree.threshold:
         best_child = vpt_search(tree.left_child, search_item, best)
+        if best_child is not None:
+            if best_child['dist'] < best['dist']:
+                best = best_child
+            if best['dist'] == 0:
+                return best
         if (d + best['dist'] + extra_constant) >= tree.threshold:
             best_child = vpt_search(tree.right_child, search_item, best)
     else:
         best_child = vpt_search(tree.right_child, search_item, best)
+        if best_child is not None:
+            if best_child['dist'] < best['dist']:
+                best = best_child
+            if best['dist'] == 0:
+                return best
         if (d - best['dist'] - extra_constant) <= tree.threshold:
             best_child = vpt_search(tree.left_child, search_item, best)
 
