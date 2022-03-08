@@ -34,20 +34,23 @@ processmanager = multiprocessing.Manager()
 # data structure filled with data to speed up looking up known files
 tlsh_hashes = set()
 
+tlsh_hashes_file = '/tmp/tlsh-hashes.txt'
+with open(tlsh_hashes_file, 'r') as tlsh_file:
+    for h in tlsh_file:
+        tlsh_hashes.add(h.strip())
+
+# turn into a dict shared between all threads
+tlsh_hashes = dict.fromkeys(tlsh_hashes, None)
+tlsh_hashes = processmanager.dict(tlsh_hashes)
+
 # data structure that is currently not used, but could be filled
 # with data to return some useful information directly to the clients,
 # without needing to do an extra lookup in an external file or database.
 tlsh_to_sha256 = {}
 
-with open('/tmp/tlsh-hashes.txt', 'r') as tlsh_file:
-    for h in tlsh_file:
-        tlsh_hashes.add(h.strip())
-
-tlsh_hashes = dict.fromkeys(tlsh_hashes, None)
-tlsh_hashes = processmanager.dict(tlsh_hashes)
-
 # load tlsh VPT
-with open('/tmp/licenses-tlsh.pickle', 'rb') as pickle_file:
+tlsh_pickle_file = '/tmp/licenses-tlsh.pickle'
+with open(tlsh_pickle_file, 'rb') as pickle_file:
     root = vpt.pickle_restore(pickle.load(pickle_file))
 
 WSGIRequestHandler.protocol_version = "HTTP/1.1"

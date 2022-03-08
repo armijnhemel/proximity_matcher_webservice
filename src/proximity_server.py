@@ -29,7 +29,8 @@ from werkzeug.serving import WSGIRequestHandler
 import vpt
 
 # load tlsh VPT
-with open('/tmp/licenses-tlsh.pickle', 'rb') as pickle_file:
+tlsh_pickle_file = '/tmp/licenses-tlsh.pickle'
+with open(tlsh_pickle_file, 'rb') as pickle_file:
     root = vpt.pickle_restore(pickle.load(pickle_file))
 
 WSGIRequestHandler.protocol_version = "HTTP/1.1"
