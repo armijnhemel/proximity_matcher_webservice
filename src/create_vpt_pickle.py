@@ -27,7 +27,8 @@ import vpt
 @click.command(short_help='process TLSH hashes and turn into a pickle')
 @click.option('--infile', '-i', required=True, help='file with TLSH hashes', type=click.File('r'))
 @click.option('--outfile', '-o', required=True, help='output file for VPT pickle', type=click.File('wb'))
-def main(infile, outfile):
+@click.option('--no-optimize', 'optimize', help='disable optimizing pickle', default=True, flag_value=False, is_flag=True)
+def main(infile, outfile, optimize):
     tlsh_hashes = set()
 
     with infile as tlsh_file:
@@ -51,7 +52,7 @@ def main(infile, outfile):
     if tlsh_objects != []:
         root = vpt.vpt_grow(tlsh_objects)
 
-        vpt.pickle_tree(root, outfile)
+        vpt.pickle_tree(root, outfile, optimize)
 
 if __name__ == "__main__":
     main()
