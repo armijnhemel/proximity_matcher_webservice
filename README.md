@@ -93,6 +93,15 @@ The `create_vpt_pickle.py` tool can be invoked as follows:
 $ python3 create_vpt_pickle.py -i /tmp/tlsh-hashes.txt -o /tmp/licenses-tlsh.pickle
 ```
 
+By default the resulting `.pickle` is optimized, resulting in a smaller pickle
+file, faster loading and less memory usage. The optimization process itself
+can consume a very significant amount of memory. If optimization is causing
+problems, then it can be turned off using the `--no-optimize` flag, as follows:
+
+```
+$ python3 create_vpt_pickle.py -i /tmp/tlsh-hashes.txt -o /tmp/licenses-tlsh.pickle --no-optimize
+```
+
 The data structure uses `__slots__` to squeeze more performance out of the
 code. This means that the data structure is static and cannot be changed while
 the program is running. If a dataset needs to be changed, it should be
