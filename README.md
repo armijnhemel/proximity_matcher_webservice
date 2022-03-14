@@ -266,6 +266,11 @@ Snippet scanning and proximity matching each have their own uses and can be
 used to solve different problems. They complement each other but should *not*
 be used in place of each other.
 
+# Defensive publications
+
+1. <https://www.tdcommons.org/dpubs_series/4965/> - Automated clearing of
+software source code files using proximity matching and parsing file contents
+
 # Links
 
 1. <http://tlsh.org/> - official TLSH website
