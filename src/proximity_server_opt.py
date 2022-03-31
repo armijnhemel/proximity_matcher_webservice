@@ -53,12 +53,13 @@ tlsh_pickle_file = '/tmp/licenses-tlsh.pickle'
 with open(tlsh_pickle_file, 'rb') as pickle_file:
     root = vpt.pickle_restore(pickle.load(pickle_file))
 
+# do not default to HTTP/1.0
 WSGIRequestHandler.protocol_version = "HTTP/1.1"
 app = Flask(__name__)
 
 @app.route("/tlsh/<tlsh_hash>")
 def process_tlsh(tlsh_hash):
-    # first verify if the TLSH hash is a correct hash
+    # first verify if the hash provided is a valid TLSH hash
     h = tlsh.Tlsh()
     try:
         h.fromTlshStr(tlsh_hash)
@@ -72,8 +73,10 @@ def process_tlsh(tlsh_hash):
         res = {'match': True, 'tlsh': best_match, 'distance': best}
         return jsonify(res)
 
+    # initial value
     best_vpt = {"dist": sys.maxsize, "hash": None}
 
+    # search the VPT for a closest match
     vpt_result = vpt.vpt_search(root, h, best_vpt)
     if vpt_result is not None:
         #res = {'match': True, 'tlsh': vpt_result['hash'].hexdigest(), 'distance': vpt_result['dist'], 'closest_sha256_hashes': tlsh_to_sha256[vpt_result['hash']]}
