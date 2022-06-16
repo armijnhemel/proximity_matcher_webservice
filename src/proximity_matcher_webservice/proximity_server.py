@@ -26,7 +26,7 @@ from flask import abort, jsonify
 
 from werkzeug.serving import WSGIRequestHandler
 
-import vpt
+import proximity_matcher_webservice.vpt as vpt
 
 # load tlsh VPT
 tlsh_pickle_file = '/tmp/licenses-tlsh.pickle'

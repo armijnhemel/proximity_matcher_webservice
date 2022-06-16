@@ -22,7 +22,7 @@ import sys
 import click
 import tlsh
 
-import vpt
+import proximity_matcher_webservice.vpt as vpt
 
 @click.command(short_help='process TLSH hashes and turn into a pickle')
 @click.option('--infile', '-i', required=True, help='file with TLSH hashes', type=click.File('r'))

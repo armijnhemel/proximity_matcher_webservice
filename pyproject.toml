@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "proximity_matcher_webservice"
+version = "0.0.1"
+authors = ["Armijn Hemel"]
+description = "This tool is a proof of concept webservice for proximity matching to quickly find the closest match for a hash in a collection of known hashes."
+readme = "README.md"
+homepage = "https://github.com/armijnhemel/proximity_matcher_webservice"
+repository = "https://github.com/armijnhemel/proximity_matcher_webservice"
+license = "Apache-2.0"
+include = [
+    "LICENSE",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+click = "^8.1.3"
+Flask = "^2.1.2"
+gevent = "^21.12.0"
+gunicorn = "^20.1.0"
+py-tlsh = "^4.7.2"
+pyyaml = "^6.0"
+requests = "^2.27.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+create-vpt-pickle = "proximity_matcher_webservice.create_vpt_pickle:main"
+proximity-matcher-server-flask = "proximity_matcher_webservice.run_proximity_matcher_server:run_proximity_server"
+proximity-matcher-server-flask-opt = "proximity_matcher_webservice.run_proximity_matcher_server:run_proximity_server_opt"
+proximity-matcher-server-gunicorn = "proximity_matcher_webservice.run_proximity_matcher_server:run_proximity_server_gunicorn"
+proximity-matcher-server-gunicorn-opt = "proximity_matcher_webservice.run_proximity_matcher_server:run_proximity_server_gunicorn_opt"

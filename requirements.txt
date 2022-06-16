@@ -1,7 +1,0 @@
-click
-Flask
-gevent
-gunicorn
-py-tlsh >= 4.7.2
-pyyaml
-requests
