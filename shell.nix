@@ -10,6 +10,7 @@ let
     flask
     gevent
     gunicorn
+    poetry
     pyyaml
     requests
     tlsh
