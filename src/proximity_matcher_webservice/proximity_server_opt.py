@@ -17,6 +17,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import multiprocessing
+import pathlib
 import pickle
 import sys
 
@@ -31,13 +32,21 @@ import proximity_matcher_webservice.vpt as vpt
 
 processmanager = multiprocessing.Manager()
 
+# do not default to HTTP/1.0
+WSGIRequestHandler.protocol_version = "HTTP/1.1"
+app = Flask(__name__)
+
+# load additional configuration
+app.config.from_envvar('PROXIMITY_CONFIGURATION')
+
 # data structure filled with data to speed up looking up known files
 tlsh_hashes = set()
 
-tlsh_hashes_file = '/tmp/tlsh-hashes.txt'
-with open(tlsh_hashes_file, 'r') as tlsh_file:
-    for h in tlsh_file:
-        tlsh_hashes.add(h.strip())
+tlsh_hashes_file = pathlib.Path(app.config['KNOWN_TLSH_HASHES'])
+if tlsh_hashes_file.exists():
+    with open(tlsh_hashes_file, 'r') as tlsh_file:
+        for h in tlsh_file:
+            tlsh_hashes.add(h.strip())
 
 # turn into a dict shared between all threads
 tlsh_hashes = dict.fromkeys(tlsh_hashes, None)
@@ -48,14 +57,15 @@ tlsh_hashes = processmanager.dict(tlsh_hashes)
 # without needing to do an extra lookup in an external file or database.
 tlsh_to_sha256 = {}
 
+tlsh_pickle_file = pathlib.Path(app.config['TLSH_PICKLE_FILE'])
+
+if not tlsh_pickle_file.exists():
+    print("TLSH pickle not defined in configuration file", file=sys.stderr)
+    sys.exit(1)
+
 # load tlsh VPT
-tlsh_pickle_file = '/tmp/licenses-tlsh.pickle'
 with open(tlsh_pickle_file, 'rb') as pickle_file:
     root = vpt.pickle_restore(pickle.load(pickle_file))
-
-# do not default to HTTP/1.0
-WSGIRequestHandler.protocol_version = "HTTP/1.1"
-app = Flask(__name__)
 
 @app.route("/tlsh/<tlsh_hash>")
 def process_tlsh(tlsh_hash):

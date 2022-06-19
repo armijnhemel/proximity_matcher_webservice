@@ -16,6 +16,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+import pathlib
 import pickle
 import sys
 
@@ -28,14 +29,21 @@ from werkzeug.serving import WSGIRequestHandler
 
 import proximity_matcher_webservice.vpt as vpt
 
-# load tlsh VPT
-tlsh_pickle_file = '/tmp/licenses-tlsh.pickle'
-with open(tlsh_pickle_file, 'rb') as pickle_file:
-    root = vpt.pickle_restore(pickle.load(pickle_file))
-
 # do not default to HTTP/1.0
 WSGIRequestHandler.protocol_version = "HTTP/1.1"
 app = Flask(__name__)
+
+# load tlsh VPT from configuration file
+app.config.from_envvar('PROXIMITY_CONFIGURATION')
+
+tlsh_pickle_file = pathlib.Path(app.config['TLSH_PICKLE_FILE'])
+
+if not tlsh_pickle_file.exists():
+    print("TLSH pickle not defined in configuration file", file=sys.stderr)
+    sys.exit(1)
+
+with open(tlsh_pickle_file, 'rb') as pickle_file:
+    root = vpt.pickle_restore(pickle.load(pickle_file))
 
 @app.route("/tlsh/<tlsh_hash>")
 def process_tlsh(tlsh_hash):
