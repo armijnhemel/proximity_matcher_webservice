@@ -7,6 +7,8 @@
 
   outputs = { self, nixpkgs }: ({
     overlays.default = import ./overlay.nix;
+
+    nixosModules.default = ./module.nix;
   }) // (
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
