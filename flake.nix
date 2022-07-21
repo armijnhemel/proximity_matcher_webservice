@@ -19,6 +19,10 @@
         inherit (self.overlays.default null nixpkgs.legacyPackages.${system}) proximity_matcher_webservice;
         default = proximity_matcher_webservice;
       });
+
+      checks = forAllSystems (system: rec {
+        integration-test = import ./test.nix { inherit nixpkgs self system; };
+      });
     }
   );
 }
