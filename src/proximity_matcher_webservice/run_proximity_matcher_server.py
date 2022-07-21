@@ -17,21 +17,53 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+import os
 import subprocess
 
 
 def run_proximity_server():
-    subprocess.Popen("export FLASK_APP=proximity_matcher_webservice.proximity_server.py; flask run", shell=True)
+    subprocess.run(
+        ["flask", "run"],
+        env=os.environ.update(
+            {"FLASK_APP": "proximity_matcher_webservice.proximity_server.py"}
+        ),
+    )
 
 
 def run_proximity_server_opt():
-    subprocess.Popen("export FLASK_APP=proximity_matcher_webservice.proximity_server_opt.py; flask run", shell=True)
+    subprocess.run(
+        ["flask", "run"],
+        env=os.environ.update(
+            {"FLASK_APP": "proximity_matcher_webservice.proximity_server_opt.py"}
+        ),
+    )
 
 
 def run_proximity_server_gunicorn():
-    subprocess.Popen("gunicorn -w 4 -b 127.0.0.1:5000 --preload proximity_matcher_webservice.proximity_server:app", shell=True)
+    subprocess.run(
+        [
+            "gunicorn",
+            "-w",
+            "4",
+            "-b",
+            "127.0.0.1:5000",
+            "--preload",
+            "proximity_matcher_webservice.proximity_server:app",
+        ]
+    )
 
 
 def run_proximity_server_gunicorn_opt():
-    subprocess.Popen("gunicorn -w 4 -b 127.0.0.1:5000 -t 60 --preload "
-                     "proximity_matcher_webservice.proximity_server_opt:app", shell=True)
+    subprocess.run(
+        [
+            "gunicorn",
+            "-w",
+            "4",
+            "-b",
+            "127.0.0.1:5000",
+            "-t",
+            "60",
+            "--preload",
+            "proximity_matcher_webservice.proximity_server_opt:app",
+        ]
+    )
