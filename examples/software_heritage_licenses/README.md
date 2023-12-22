@@ -93,7 +93,8 @@ Open the Python console, load a file, compute the TLSH hash
 'T1D011461E72610773289613A055656CC5F26FB15F7AAF1684146DF284133746CD1FF844'
 ```
 
-The last line is the TLSH hash, which you can and paste it into your web browser:
+The last line is the TLSH hash, which you can and paste it into your web
+browser:
 
 <http://127.0.0.1:5000/tlsh/T1D011461E72610773289613A055656CC5F26FB15F7AAF1684146DF284133746CD1FF844>
 
@@ -105,12 +106,12 @@ distance will be 0 and the returned JSON will look like this:
 ```
 
 1. `distance`: the TLSH distance. `0` means that there is no difference with a
-file known to the webservice (in this case that means it is in the Software
-Heritage dataset).
+   file known to the webservice (in this case that means it is in the Software
+   Heritage dataset).
 2. `match`: whether or not there was a match. Right now if a valid TLSH hash
-was used as a parameter the result is always `True`. Only if the parameter is
-not a valid TLSH hash the result will be `False`. In case thresholds are
-implemented (which is the plan) this might be changed.
+   was used as a parameter the result is always `True`. Only if the parameter
+   is not a valid TLSH hash the result will be `False`. In case thresholds are
+   implemented (which is the plan) this might be changed.
 3. `tlsh`: the TLSH hash of the match found by the webservice.
 
 The result hash should be cross-correlated with the metadata in Software
@@ -152,12 +153,12 @@ lines of that file look like this:
 Each line is a valid JSON response (as returned by the webserver). The results:
 
 1. `distance`: the TLSH distance. `0` means that there is no difference with a
-file known to the webservice (in this case that means it is in the Software
-Heritage dataset).
+   file known to the webservice (in this case that means it is in the Software
+   Heritage dataset).
 2. `match`: whether or not there was a match. Right now if a valid TLSH hash
-was used as a parameter the result is always `True`. Only if the parameter is
-not a valid TLSH hash the result will be `False`. In case thresholds are
-implemented (which is the plan) this might be changed.
+   was used as a parameter the result is always `True`. Only if the parameter
+   is not a valid TLSH hash the result will be `False`. In case thresholds are
+   implemented (which is the plan) this might be changed.
 3. `tlsh`: the TLSH hash of the match found by the webservice.
 
 The result hash should be cross-correlated with the metadata in Software
