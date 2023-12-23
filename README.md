@@ -10,7 +10,9 @@ that have already been vetted or cleared by an open source software compliance
 team or security audit team.
 
 This tool should not be used in production as is but should serve as an
-example of how to do these things.
+example of how to do these things. If you want to use it in production, keep
+in mind that this service has no built-in security or user management, so it
+should not be used in an untrusted environment,
 
 ## TLSH and exact matches
 
@@ -104,8 +106,8 @@ $ python3 create_vpt_pickle.py -i /tmp/tlsh-hashes.txt -o /tmp/licenses-tlsh.pic
 
 The data structure uses `__slots__` to squeeze more performance out of the
 code. This means that the data structure is static and cannot be changed while
-the program is running. If a dataset needs to be changed, it should be
-regenerated.
+the program is running. If a dataset needs to be changed or updated, it should
+be regenerated and the program needs to be restarted.
 
 ## Starting the server
 
@@ -148,7 +150,7 @@ $ export FLASK_APP=proximity_server.py
 $ flask run
 ```
 
-This will launch the webservce, which can then be accessed on the advertised
+This will launch the webservice, which can then be accessed on the advertised
 URL.
 
 There is also an optimized version of the server called
@@ -166,7 +168,7 @@ $ flask run
 
 The optimized version can use significantly more memory. If it is already
 possible to filter known hashes before sending the hashes to the webservice
-then it is recommended to use the regular version.
+then it is recommended to use the regular version instead.
 
 ### Gunicorn
 
@@ -218,17 +220,17 @@ this:
 Each line is a valid JSON response (as returned by the webserver). The results:
 
 1. `distance`: the TLSH distance. `0` means that there is no difference with a
-file known to the webservice.
+   file known to the webservice.
 2. `match`: whether or not there was a match. Right now if a valid TLSH hash
-was used as a parameter the result is always `True`. Only if the parameter is
-not a valid TLSH hash the result will be `False`. In case thresholds are
-implemented (which is the plan) this might be changed.
+   was used as a parameter the result is always `True`. Only if the parameter
+   is not a valid TLSH hash the result will be `False`. In case thresholds are
+   implemented (which is the plan) this might be changed.
 3. `tlsh`: the TLSH hash of the match found by the webservice.
 
 As the webservice does not include any of the "business logic" but is only used
 for finding the closest match this means that the data has to be further
 processed for example by cross-correlating with other data. Alternatively the
-served could be extended to also return this information, for example by
+server could be extended to also return this information, for example by
 loading it from an external database or some other resource.
 
 # Caveats
@@ -272,14 +274,14 @@ solutions:
 1. do not sort the TLSH hashes
 2. use less data
 3. do not use a pickle, but recreate the vantage point tree whenever the
-webservice is started. This might be expensive (several minutes) if a lot of data
-is involved.
+   webservice is started. This might be expensive (several minutes) if a lot of
+   data is involved.
 4. do not include useless data where there will not be a useful match such as
-graphics files
+   graphics files
 5. partition the data and use multiple instances of the webservice. A good
-partitioning could for example be by programming language, or extension.
+   partitioning could for example be by programming language, or extension.
 6. raise the recursion limit (currently already raised to `1000` above the
-system default)
+   system default)
 
 # Comparison to snippet matching
 
@@ -287,13 +289,13 @@ Although the proximity matching method seems like what snippet scanners do
 there are some very clear differences:
 
 1. the method used here works on whole files only, whereas snippet scans work
-by searching for snippets (hence the name) of known files
+   by searching for snippets (hence the name) of known files
 2. the result is a (shortest) distance to a known file in a set of files,
-while the result of snippet scanners is a match with for example a percentage
-("files A and B match for 97%") and line numbers or byte ranges where the
-files match.
+   while the result of snippet scanners is a match with for example a
+   percentage ("files A and B match for 97%") and line numbers or byte ranges
+   where the files match.
 3. proximity matching code will not be easily/reliably able to detect reuse of
-small pieces of code.
+   small pieces of code.
 
 Snippet scanning and proximity matching each have their own uses and can be
 used to solve different problems. They complement each other but should *not*
