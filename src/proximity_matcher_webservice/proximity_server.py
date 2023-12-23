@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 #
 # Copyright 2022 - Armijn Hemel
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 # http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -48,9 +48,9 @@ with open(tlsh_pickle_file, 'rb') as pickle_file:
 @app.route("/tlsh/<tlsh_hash>")
 def process_tlsh(tlsh_hash):
     # first verify if the hash provided is a valid TLSH hash
-    h = tlsh.Tlsh()
+    requested_tlsh = tlsh.Tlsh()
     try:
-        h.fromTlshStr(tlsh_hash)
+        requested_tlsh.fromTlshStr(tlsh_hash)
     except ValueError:
         abort(404, "invalid TLSH string")
 
@@ -58,7 +58,7 @@ def process_tlsh(tlsh_hash):
     best_vpt = {"dist": sys.maxsize, "hash": None}
 
     # search the VPT for a closest match
-    vpt_result = vpt.vpt_search(root, h, best_vpt)
+    vpt_result = vpt.vpt_search(root, requested_tlsh, best_vpt)
     if vpt_result is not None:
         res = {'match': True, 'tlsh': vpt_result['hash'].hexdigest(), 'distance': vpt_result['dist']}
     else:
